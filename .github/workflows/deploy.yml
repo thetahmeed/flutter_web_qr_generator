@@ -9,7 +9,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: write  # Add this to give write permissions to GITHUB_TOKEN
+      contents: write  
 
     steps:
       - uses: actions/checkout@v3
@@ -26,5 +26,5 @@ jobs:
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}  # Or use your PAT here
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./build/web
