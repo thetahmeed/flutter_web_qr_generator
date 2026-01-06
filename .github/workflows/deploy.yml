@@ -3,26 +3,28 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - main # Or 'master' depending on your default branch name
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write  # Add this to give write permissions to GITHUB_TOKEN
+
     steps:
       - uses: actions/checkout@v3
-      
+
       - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
-          
+
       - name: Build Web
         run: |
           flutter pub get
-          # The --base-href is crucial. Use your repo name between the slashes.
           flutter build web --release --base-href "/flutter_web_qr_generator/"
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}  # Or use your PAT here
           publish_dir: ./build/web
